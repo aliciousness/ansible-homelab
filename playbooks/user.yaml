@@ -1,0 +1,31 @@
+---
+#########################################################
+#             Verifictaion of user creditionals         #
+#          This playbook requires vault variables       #
+#########################################################
+- hosts: "{{ node }}"
+  roles:
+    - pip
+    - user
+    - role: ohmyzsh
+      usr_password: '{{ users.password[0] }}'
+  pre_tasks:
+    - block:
+      - name: Move init script to scripts directory
+        shell: 
+          cmd: mkdir -p scripts && mv init.sh scripts/
+          chdir: '{{ HOME }}'
+      rescue:
+      - debug:
+          msg: 'Init script is not present at {{ HOME }}'
+
+  tasks:
+    - include_role:
+        name: tailscale
+      when: tailscale_enabled | default(false)
+      
+    - include_role:
+        name: urbackup
+      vars:
+        add_client: true
+        client: '{{ node }}'

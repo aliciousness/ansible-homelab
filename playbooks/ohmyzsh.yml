@@ -1,0 +1,8 @@
+---
+########################################################
+#                   Install oh my zsh                  #
+#          This playbook requires vault variables       #
+########################################################
+- hosts: '{{ node }}'
+  roles:
+    - role: ohmyzsh

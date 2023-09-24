@@ -1,0 +1,16 @@
+- name: check version of zsh
+  become: true
+  shell:
+    cmd: zsh --version
+  register: zsh_version
+  ignore_errors: true
+  
+- name: Create users
+  become: true
+  user:
+    name: '{{ item.name }}'
+    update_password: '{{ item.update_password }}'
+    password: "{{ item.password | password_hash('sha512') }}"
+    shell: '{{ item.shell }}'
+  no_log: true
+  with_items: '{{ users }}'

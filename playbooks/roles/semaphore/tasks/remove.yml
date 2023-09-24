@@ -1,0 +1,8 @@
+---
+- name: remove Semaphore from snap
+  snap:
+    name: semaphore
+    state: absent
+    
+- name: End the play
+  ansible.builtin.meta: end_host

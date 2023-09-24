@@ -1,0 +1,6 @@
+- hosts: test
+  vars:
+    add_client: true
+    client: '{{ node }}'
+  roles:
+    - role: urbackup

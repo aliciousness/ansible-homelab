@@ -1,0 +1,22 @@
+---
+- name: set up telegram
+  shell:
+    cmd: snap set semaphore {{ item }}
+  no_log: true
+  with_items:
+    - telegram-alert=true
+    - telegram-chat={{ telegram_chat_id }}
+    - telegram-token={{ telegram_token }}
+    - port={{ semaphore_port }}
+  
+- shell: snap get semaphore
+  register: semaphoreInfo
+
+- name: restart semaphore 
+  shell:
+    cmd: snap restart semaphore
+
+- name: read new config 
+  debug:
+    msg: '{{ semaphoreInfo.stdout }}'
+  when: debug | default(false)

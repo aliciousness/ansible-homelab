@@ -1,0 +1,11 @@
+---
+- name: Gather LSB Facts
+  setup:
+    filter: lsb
+- name: Assert that Host Operating System is Ubuntu
+  assert:
+    that:
+      - ansible_facts.lsb.id == 'Ubuntu'
+    fail_msg: 'Host Operating System is NOT Ubuntu'
+    success_msg: 'Host Operating System is Ubuntu'
+

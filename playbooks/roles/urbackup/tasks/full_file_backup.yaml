@@ -1,0 +1,24 @@
+---
+
+- name: Move over full back up file 
+  copy:
+    dest: '{{ HOME }}/scripts'
+    src: fullfilebackup.py
+    mode: '0770'
+    owner: ansible
+    group: ansible
+
+# - name: Run full backup
+#   shell: 
+#     cmd: 'python3 fullfilebackup.py "{{ backup_server }}" "{{ password }}" "{{ client }}"'
+#     chidr: '{{ HOME }}/scripts'
+#   register: full_file
+
+- name: Run full backup
+  script: 
+    cmd: 'fullfilebackup.py "{{ backup_server }}" "{{ password }}" "{{ client }}"'
+    chidr: '{{ HOME }}/scripts'
+  register: full_file
+
+- debug:
+    msg: '{{ full_file }}'

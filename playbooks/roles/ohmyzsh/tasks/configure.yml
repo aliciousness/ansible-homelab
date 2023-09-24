@@ -1,0 +1,27 @@
+---
+- block:
+    - name: make back up of the original rc file 
+      shell:
+          cmd: 'mv .zshrc .zshrc.bak.{{ ansible_date_time.date }}'
+          chdir: '{{ HOME }}'
+  rescue:
+    - name: print
+      debug:
+        msg: "No previous .zshrc file"
+  
+- name: change over to my custom zshrc file
+  copy:
+      src: .zshrc
+      dest: '{{ HOME }}'
+
+- block:
+    - name: run git clones 
+      shell: 'git clone {{ item }}'
+      with_items: '{{ git }}'
+  rescue:
+    - debug:
+        msg: "The custom plugins were already ran"
+
+- name: Correct permissions on these plugins
+  become: true
+  shell: 'chmod 755 {{ HOME }}/.oh-my-zsh/custom/plugins/*'

@@ -1,0 +1,20 @@
+- name: sync folders to plex
+  synchronize:
+      src: '{{ item.src }}'
+      dest: '{{ item.dest }}' 
+      compress: '{{ item.compress }}'   
+      delete: '{{ item.delete }}'   # false
+      perms: '{{ item.perms }}' # false
+      mode: '{{ item.mode }}' # push 
+      recursive: '{{ item.recursive }}' # ture
+      owner: '{{ item.owner }}' # false
+      group: '{{ item.group }}' # false
+      times: '{{ item.times }}' # true
+  with_items: '{{ sync }}'
+
+- name: change owner of all items to plex user 
+  shell: chown -R plex:plex /home/plex/Media/ 
+
+- name: fix permissions 
+  shell: chmod -R {{ item.mode }} /home/plex/Media/{{ item.name }}
+  with_items: '{{ permissions }}'

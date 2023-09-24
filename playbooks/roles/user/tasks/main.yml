@@ -1,0 +1,8 @@
+---
+# tasks file for playbooks/roles/user
+- name: Create or add user
+  include_tasks:
+    file: ./user.yml
+- name: add keys
+  include_tasks:
+    file: ./ssh.yml

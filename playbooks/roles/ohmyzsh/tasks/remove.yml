@@ -1,0 +1,6 @@
+---
+- name: Remove omz 
+  shell: echo "y" | uninstall_oh_my_zsh
+
+- name: End the play
+  ansible.builtin.meta: end_host

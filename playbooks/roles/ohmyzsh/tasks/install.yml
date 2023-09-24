@@ -1,0 +1,36 @@
+---
+# installation
+- block:
+    - name: checking if ohmyzsh is installed
+      stat:
+        path: '{{ HOME }}/.oh-my-zsh'
+      register: omz
+      failed_when: not omz.stat.exists
+      # Cannot run omz commands through ansible.
+  rescue:
+    - name: Install OhMyZSH
+      shell:
+        cmd: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        chdir: '{{ HOME }}'
+    
+    - include_tasks: configure.yml
+
+- block:
+    - name: check if pip is installed 
+      become: true
+      shell:
+        cmd: pip --version
+      register: pip
+  rescue:  
+    - name: install pip 
+      become: true
+      apt:
+        name: python3-pip
+        state: latest
+      when: pip.rc == 127
+    - name: install thefuck
+      become: true
+      shell:
+        cmd: pip install thefuck
+  when: not install_thefuck | default(true)
+    

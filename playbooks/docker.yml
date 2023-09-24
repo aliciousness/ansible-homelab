@@ -1,0 +1,12 @@
+---
+#########################################################
+#             Verifictaion of user creditionals         #
+#########################################################
+- hosts: '{{ node }}'
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - pip
+    - docker 

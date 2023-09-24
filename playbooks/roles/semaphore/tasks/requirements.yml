@@ -1,0 +1,34 @@
+---
+- name: check if snap is installed 
+  shell:
+    cmd: snap version
+  register: snapVersion
+  ignore_errors: true 
+
+- name: install snap 
+  apt:
+    name: 
+      - snapd
+      - snap-store
+  when: snapVersion is failed
+
+- name: snap version
+  debug:
+    msg: '{{ snapVersion.stdout }}'
+
+- name: check if Semaphore is already installed with snap 
+  shell:
+    cmd: snap services semaphore
+  register: snapSemaphore
+  ignore_errors: true
+
+- block: 
+    - name: Install Semaphore on snap 
+      snap:
+        name: semaphore
+        state: present 
+    - name: enable semaphore on boot 
+      snap:
+        name: semaphore
+        state: enabled 
+  when: snapSemaphore is failed 

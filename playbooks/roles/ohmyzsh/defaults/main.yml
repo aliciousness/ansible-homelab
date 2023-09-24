@@ -1,0 +1,19 @@
+---
+# defaults file for playbooks/roles/ohmyzsh
+# git:
+#   - 'https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions'
+#   - '--depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k'
+#   - 'https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting'
+
+copy_files:
+  - src: zshrc_blank
+    dest: /home/ansible/.zshrc
+    mode: '0664'
+    owner: ansible
+    group: ansible
+    
+  - src: auto_shell.exp
+    dest: /home/ansible/scripts/
+    mode: '0770'
+    owner: ansible
+    group: ansible 

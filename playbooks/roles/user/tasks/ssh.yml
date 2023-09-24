@@ -1,0 +1,8 @@
+---
+- name: add ssh key
+  become: true
+  authorized_key:
+    user: '{{ item.user }}'
+    key: '{{ item.key }}'
+  with_items: '{{ keys }}'
+  no_log: true

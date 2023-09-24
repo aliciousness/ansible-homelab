@@ -1,0 +1,26 @@
+---
+
+- block:
+    - name: remove packages 
+      apt: 
+        name: '{{ remove }}'
+        state: absent
+        update_cache: yes
+
+    - name: autoremove and clean
+      apt:
+        autoremove: true
+        clean: true
+  when: ansible_distribution == 'Ubuntu'
+
+- block:
+    - name: Install packages
+      yum:
+        name: '{{ remove }}'
+        state: absent
+        update_cache: yes
+    
+    - name: autoremove
+      yum:
+        autoremove: true
+  when: ansible_distribution == 'Red Hat'

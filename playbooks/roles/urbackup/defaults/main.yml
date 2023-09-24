@@ -1,0 +1,20 @@
+---
+# defaults file for roles/urbackup
+
+# backup_server: <IP or hostname of backup server>
+
+add_client: true # true or false
+full_file: false # true or false 
+scripts:
+  - name: add client 
+    src: addclient.py
+    dest: /home/ansible/scripts/
+    mode: '0770'
+    owner: ansible
+    group: ansible 
+  - name: full file back up 
+    src: fullfilebackup.py
+    dest: /home/ansible/scripts/
+    mode: '0770'
+    owner: ansible 
+    group: ansible 

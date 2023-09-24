@@ -1,0 +1,35 @@
+---
+# tasks file for playbooks/roles/ohmyzsh
+- include_tasks: remove.yml
+  when: remove_omz | default(false)
+
+- include_tasks: requirements.yml
+- name: Reset ssh connection 
+  ansible.builtin.meta: reset_connection
+
+- name: check ansible fact shell
+  debug:
+      msg: '{{ ansible_facts.env.SHELL }}'
+  when: debug | default(false)
+
+- block:
+    - include_tasks: install.yml
+  when: "'/bin/zsh' in ansible_facts.env.SHELL" 
+
+- name: Reset ssh connection 
+  ansible.builtin.meta: reset_connection
+
+- block:
+    - name: configure my zsh
+      include_tasks: configure.yml
+
+    - name: upgrade omz
+      shell:
+        cmd: ./upgrade.sh
+        chdir: '{{ HOME }}/.oh-my-zsh/tools' 
+  when: "'/bin/zsh' in ansible_facts.env.SHELL"
+
+- name: SHELL IS NOT SET TO ZSH
+  fail:
+    msg: The users shell is still not set to ZSH, try running again
+  when: "'/bin/zsh' not in ansible_facts.env.SHELL"

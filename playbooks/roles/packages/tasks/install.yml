@@ -1,0 +1,16 @@
+---
+
+- name: Install packages 
+  apt: 
+    name: '{{ install }}'
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install packages
+  yum:
+    name: '{{ install }}'
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == 'Red Hat'
+  

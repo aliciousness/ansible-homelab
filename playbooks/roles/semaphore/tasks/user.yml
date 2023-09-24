@@ -1,0 +1,29 @@
+---
+
+- block:
+    - name: stop semaphore service 
+      shell:
+        cmd: snap stop semaphore
+      register: stopSemaphore
+  rescue:
+    - name: fail if semaphore cannot stop
+      fail:
+        msg: "Cannot stop semaphore service"
+
+- block:
+  - name: add user to semaphore
+    shell:
+      cmd: |
+        semaphore user add --admin \
+        --login {{ item.login }} \
+        --name={{ item.name }} \
+        --email={{ item.email }} \
+        --password={{ item.password }}
+    with_items: '{{ admin_users }}'
+    no_log: true
+
+  - name: start semaphore service 
+    shell:
+      cmd: snap start semaphore
+  
+

@@ -1,0 +1,16 @@
+---
+# tasks file for playbooks/roles/patch
+
+- name: patch system (Ubuntu)
+  apt:
+    name: '*'
+    state: latest
+    update_cache: true
+  when: ansible_distribution == 'Ubuntu'
+
+- name: patch system (AWS) 
+  yum:
+    name: '*'
+    state: latest 
+    update_cache: true
+  when: ansible_distribution == 'Red Hat'

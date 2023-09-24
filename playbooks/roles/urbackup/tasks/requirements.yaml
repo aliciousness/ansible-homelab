@@ -1,0 +1,20 @@
+---
+# tasks for equirements 
+
+- name: Check if client variable is defined
+  fail:
+    msg: "Client variable is missing or empty"
+  when: client is not defined or client | length == 0
+
+- name: install urbackup python client
+  include_role: 
+    name: pip
+
+- name: Move over all scripts 
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '{{ item.mode }}'
+    owner: '{{ item.owner }}'
+    group: '{{ item.group }}'
+  loop: '{{ scripts }}'

@@ -1,0 +1,27 @@
+---
+
+- name: move addclient.py over 
+  copy:
+    dest: '{{ HOME }}/scripts'
+    src: addclient.py
+    mode: '0770'
+    owner: ansible
+    group: ansible
+
+- name: Add new client to urbackup
+  shell: 
+    cmd: 'python3 addclient.py "{{ backup_server }}" "{{ password }}" "{{ client }}"'
+    chdir: '{{ HOME }}/scripts'
+  register: add_client
+
+# - name: Add new client to urbackup
+#   script: 
+#     cmd: 'addclient.py "{{ backup_server }}" "{{ password }}" "{{ client }}"'
+#     chdir: '{{ HOME }}/scripts'
+#   register: add_client
+
+- debug:
+    var: add_client
+
+
+# After adding client need to edit /usr/local/var/urbackup/data/settings.cfg and add the ip on the urbackup server 

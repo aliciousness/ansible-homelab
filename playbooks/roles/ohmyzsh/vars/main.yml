@@ -1,0 +1,4 @@
+---
+# vars file for playbooks/roles/ohmyzsh
+
+# usr_passwd: The Users password. 

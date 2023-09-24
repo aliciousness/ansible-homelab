@@ -1,0 +1,19 @@
+
+##############################
+#       Machine inventory    #
+##############################
+[plex]
+< IP >
+[proxmox]
+< IP >
+[docker]
+< IP >
+[backup]
+< IP >
+[pihole-ftl]
+< IP >
+[pipeline]
+< IP >
+
+[all:vars]
+ansible_user = "ansible"

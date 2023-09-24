@@ -1,0 +1,45 @@
+---
+- name: install git curl and wget 
+  become: true
+  apt:
+    name: 
+      - git
+      - curl
+      - wget
+      - expect
+      - python3-pip
+    state: latest
+    update_cache: true 
+
+- block:
+  - name: copy over blank zshrc
+    copy:
+      src: '{{ item.src }}'
+      dest: '{{ item.dest }}'
+      mode: '{{ item.mode }}'
+      owner: '{{ item.owner }}'
+      group: '{{ item.group }}'
+    loop: '{{ copy_files }}'
+
+  - name: install zsh  
+    become: true
+    shell: apt install zsh -y
+
+  - name: make zsh default shell
+    shell:
+      cmd: './auto_shell.exp {{ shell }} "{{ usr_passwd }}"'
+      chdir: '{{ HOME }}/scripts'
+    register: automate
+
+  - debug:
+      var: automate
+
+  - name: print current shell
+    shell:
+      cmd: echo $SHELL
+    register: shell
+
+  - name: print current shell
+    debug:
+      msg: '{{ shell.stdout_lines }}'
+  when: "'/bin/zsh' not in ansible_facts.env.SHELL"

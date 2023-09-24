@@ -1,0 +1,14 @@
+---
+
+- block:
+    - name: check if rsync is installed 
+      shell: rsync --version
+  rescue:
+    - name: install rsync and grsync if not already installed 
+      apt:
+        name: 
+          - rsync
+          - grsync
+        state: latest
+        update_cache: true
+

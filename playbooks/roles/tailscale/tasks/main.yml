@@ -1,0 +1,5 @@
+---
+# tasks file for tailscale
+
+- include_tasks: install.yml
+- include_tasks: configure.yml

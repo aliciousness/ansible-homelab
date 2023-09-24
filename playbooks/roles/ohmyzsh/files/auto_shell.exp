@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+
+# Check if the correct number of arguments is provided
+if {$argc != 2} {
+    puts "Usage: $argv0 <shell> <password>"
+    exit 1
+}
+
+set shell [lindex $argv 0]
+set password [lindex $argv 1]
+
+set timeout -1
+spawn chsh -s $shell
+match_max 100000
+expect -exact "Password: "
+send -- "$password\r"
+expect eof

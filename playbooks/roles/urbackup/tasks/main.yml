@@ -1,0 +1,15 @@
+---
+# tasks file for roles/urbackup
+
+- name: REQUIREMENTS
+  include_tasks: requirements.yaml
+
+- name: add client 
+  include_tasks: add_client.yaml
+  when: add_client | bool 
+  
+- name: start full file backup
+  include_tasks: full_file_backup.yaml
+  when: full_file | bool 
+
+# Some of these should be there on file under tasks 

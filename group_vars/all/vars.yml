@@ -1,0 +1,173 @@
+#
+# Misc
+#
+debug: true
+
+hostname: '{{ inventory_hostname }}'
+
+timezone: US/New-York
+
+ntp_timezone: '{{ timezone }}'
+
+locale: en_US.UTF-8
+
+keyboard_layout: us
+
+username: richard
+
+shell: /usr/bin/zsh
+
+dotfiles_repo: https://github.com/
+
+guid: 1000
+
+interactive: 
+
+timeout: 30
+
+HOME: /home/ansible
+#
+# Semaphore 
+#
+remove_semaphore: false
+
+#
+# Plex
+#
+permissions:
+  - name: Pictures
+    mode: 770
+  - name: Movies
+    mode: 770
+  # - name: Music
+  #   mode:  
+  - name: Other
+    mode: 770  
+  - name: Tv-Shows
+    mode: 770
+
+    
+sync:
+  - name: Pictures 
+    src: /home/ansible/Pictures/
+    dest: /home/plex/Media/Pictures/
+    compress: true 
+    delete: false
+    perms: false
+    mode: push 
+    recursive: true
+    owner: false
+    group: false
+    times: true
+  - name: Movies 
+    src: /home/ansible/Movies/
+    dest: /home/plex/Media/Movies/
+    compress: true 
+    delete: false
+    perms: false
+    mode: push 
+    recursive: true
+    owner: false
+    group: false
+    times: true
+  - name: Other 
+    src: /home/ansible/Other/
+    dest: /home/plex/Media/Other/
+    compress: true 
+    delete: false
+    perms: false
+    mode: push 
+    recursive: true
+    owner: false
+    group: false
+    times: true
+  - name: Tv-Shows 
+    src: /home/ansible/Tv-Shows/
+    dest: /home/plex/Media/Tv-Shows/
+    compress: true 
+    delete: false
+    perms: false
+    mode: push 
+    recursive: true
+    owner: false
+    group: false
+    times: true
+#
+# ohmyzsh
+#
+install_thefuck: true
+remove_omz: false
+git:
+  - 'https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions'
+  - '--depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k'
+  - 'https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting'
+#
+# tailscale
+# 
+tailscale_enabled: yes 
+
+tailscale_exit_node: no
+
+networks:
+  - name: lan
+    cidr: 192.168.2.0/24
+    base: 192.168.2
+    interface: ens18
+    tailscale: yes # whether the subnet should be exposed to other Tailscale nodes
+  - name: app
+    cidr: 10.0.0.0/24
+    base: 10.0.0
+    tailscale: yes
+  - name: iot
+    cidr: 192.168.32.0/24
+    base: 192.168.32
+    tailscale: yes
+
+#
+# Docker apps
+#
+#
+docker_dir: /opt/docker/data
+
+docker_compose_dir: /opt/docker/compose
+
+services:
+  - homeassistant
+  - mqtt
+  - nginxproxymanager
+  - deconz
+  - photoprism
+  - syncthing
+
+#
+# Packages
+#
+remove_packages: 
+
+install:
+  - speedtest-cli
+  - curl
+  - wget
+  - gnupg 
+  - software-properties-common
+remove:
+  - 
+
+#
+# Email credentials (for notifications)
+#
+
+email: craddockrichard09@gmail.com
+
+email_login: '{{ email }}'
+
+#
+# UrBackups
+#
+
+backup_server: 192.168.1.153
+
+#
+# pip 
+#
+pip_install_packages: [urbackup-server-web-api-wrapper]
