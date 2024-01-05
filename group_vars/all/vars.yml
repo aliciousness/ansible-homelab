@@ -21,7 +21,7 @@ dotfiles_repo: https://github.com/
 
 guid: 1000
 
-interactive: 
+interactive: false
 
 timeout: 30
 
@@ -165,7 +165,7 @@ email_login: '{{ email }}'
 # UrBackups
 #
 
-backup_server: 192.168.1.153
+backup_server: # address of backup server
 
 #
 # pip 
