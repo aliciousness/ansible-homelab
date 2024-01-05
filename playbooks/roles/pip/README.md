@@ -1,12 +1,10 @@
 # Ansible Role: Pip (for Python)
 
-[![CI](https://github.com/geerlingguy/ansible-role-pip/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-pip/actions?query=workflow%3ACI)
-
 An Ansible Role that installs [Pip](https://pip.pypa.io) on Linux.
 
 ## Requirements
 
-On RedHat/CentOS, you may need to have EPEL installed before running this role. You can use the `geerlingguy.repo-epel` role if you need a simple way to ensure it's installed.
+On RedHat/CentOS, you may need to have EPEL installed before running this role.
 
 ## Role Variables
 
@@ -69,7 +67,7 @@ None.
           - name: awscli
     
       roles:
-        - geerlingguy.pip
+        - pip
 
 ## License
 
@@ -77,4 +75,3 @@ MIT / BSD
 
 ## Author Information
 
-This role was created in 2017 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
