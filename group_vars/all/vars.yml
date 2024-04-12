@@ -13,7 +13,7 @@ locale: en_US.UTF-8
 
 keyboard_layout: us
 
-username: richard
+username: 
 
 shell: /usr/bin/zsh
 
@@ -150,14 +150,13 @@ install:
   - wget
   - gnupg 
   - software-properties-common
-remove:
-  - 
+remove: []
 
 #
 # Email credentials (for notifications)
 #
 
-email: craddockrichard09@gmail.com
+email: # Your email
 
 email_login: '{{ email }}'
 
